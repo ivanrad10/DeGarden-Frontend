@@ -1,0 +1,1915 @@
+{
+    "address": "J8vn4oXKvsJyyRPcEscXcPkdpcEz4EoPhjM7ebVcvhqi",
+    "metadata": {
+        "name": "de_garden",
+        "version": "0.1.0",
+        "spec": "0.1.0",
+        "description": "Created with Anchor"
+    },
+    "instructions": [
+        {
+            "name": "add_host",
+            "discriminator": [
+                191,
+                4,
+                97,
+                225,
+                59,
+                238,
+                72,
+                213
+            ],
+            "accounts": [
+                {
+                    "name": "host",
+                    "writable": true,
+                    "signer": true
+                },
+                {
+                    "name": "sensor_host_state",
+                    "writable": true,
+                    "pda": {
+                        "seeds": [
+                            {
+                                "kind": "const",
+                                "value": [
+                                    83,
+                                    69,
+                                    78,
+                                    83,
+                                    79,
+                                    82,
+                                    95,
+                                    72,
+                                    79,
+                                    83,
+                                    84
+                                ]
+                            },
+                            {
+                                "kind": "account",
+                                "path": "host"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "name": "token_mint",
+                    "pda": {
+                        "seeds": [
+                            {
+                                "kind": "const",
+                                "value": [
+                                    84,
+                                    79,
+                                    75,
+                                    69,
+                                    78,
+                                    95,
+                                    77,
+                                    73,
+                                    78,
+                                    84
+                                ]
+                            }
+                        ]
+                    }
+                },
+                {
+                    "name": "host_token_ata",
+                    "writable": true,
+                    "pda": {
+                        "seeds": [
+                            {
+                                "kind": "account",
+                                "path": "host"
+                            },
+                            {
+                                "kind": "account",
+                                "path": "token_program"
+                            },
+                            {
+                                "kind": "account",
+                                "path": "token_mint"
+                            }
+                        ],
+                        "program": {
+                            "kind": "const",
+                            "value": [
+                                140,
+                                151,
+                                37,
+                                143,
+                                78,
+                                36,
+                                137,
+                                241,
+                                187,
+                                61,
+                                16,
+                                41,
+                                20,
+                                142,
+                                13,
+                                131,
+                                11,
+                                90,
+                                19,
+                                153,
+                                218,
+                                255,
+                                16,
+                                132,
+                                4,
+                                142,
+                                123,
+                                216,
+                                219,
+                                233,
+                                248,
+                                89
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "token_program"
+                },
+                {
+                    "name": "associated_token_program",
+                    "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
+                },
+                {
+                    "name": "system_program",
+                    "address": "11111111111111111111111111111111"
+                }
+            ],
+            "args": []
+        },
+        {
+            "name": "buy_tokens",
+            "discriminator": [
+                189,
+                21,
+                230,
+                133,
+                247,
+                2,
+                110,
+                42
+            ],
+            "accounts": [
+                {
+                    "name": "buyer",
+                    "writable": true,
+                    "signer": true
+                },
+                {
+                    "name": "global_state",
+                    "pda": {
+                        "seeds": [
+                            {
+                                "kind": "const",
+                                "value": [
+                                    71,
+                                    76,
+                                    79,
+                                    66,
+                                    65,
+                                    76,
+                                    95,
+                                    83,
+                                    84,
+                                    65,
+                                    84,
+                                    69
+                                ]
+                            }
+                        ]
+                    }
+                },
+                {
+                    "name": "vault",
+                    "writable": true,
+                    "pda": {
+                        "seeds": [
+                            {
+                                "kind": "const",
+                                "value": [
+                                    86,
+                                    65,
+                                    85,
+                                    76,
+                                    84
+                                ]
+                            }
+                        ]
+                    }
+                },
+                {
+                    "name": "mint",
+                    "writable": true,
+                    "pda": {
+                        "seeds": [
+                            {
+                                "kind": "const",
+                                "value": [
+                                    84,
+                                    79,
+                                    75,
+                                    69,
+                                    78,
+                                    95,
+                                    77,
+                                    73,
+                                    78,
+                                    84
+                                ]
+                            }
+                        ]
+                    }
+                },
+                {
+                    "name": "buyer_token_ata",
+                    "writable": true,
+                    "pda": {
+                        "seeds": [
+                            {
+                                "kind": "account",
+                                "path": "buyer"
+                            },
+                            {
+                                "kind": "account",
+                                "path": "token_program"
+                            },
+                            {
+                                "kind": "account",
+                                "path": "mint"
+                            }
+                        ],
+                        "program": {
+                            "kind": "const",
+                            "value": [
+                                140,
+                                151,
+                                37,
+                                143,
+                                78,
+                                36,
+                                137,
+                                241,
+                                187,
+                                61,
+                                16,
+                                41,
+                                20,
+                                142,
+                                13,
+                                131,
+                                11,
+                                90,
+                                19,
+                                153,
+                                218,
+                                255,
+                                16,
+                                132,
+                                4,
+                                142,
+                                123,
+                                216,
+                                219,
+                                233,
+                                248,
+                                89
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "token_program"
+                },
+                {
+                    "name": "associated_token_program",
+                    "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
+                },
+                {
+                    "name": "system_program",
+                    "address": "11111111111111111111111111111111"
+                }
+            ],
+            "args": [
+                {
+                    "name": "amount",
+                    "type": "u64"
+                }
+            ]
+        },
+        {
+            "name": "deposit_collateral",
+            "discriminator": [
+                156,
+                131,
+                142,
+                116,
+                146,
+                247,
+                162,
+                120
+            ],
+            "accounts": [
+                {
+                    "name": "host",
+                    "writable": true,
+                    "signer": true
+                },
+                {
+                    "name": "sensor_host_state",
+                    "pda": {
+                        "seeds": [
+                            {
+                                "kind": "const",
+                                "value": [
+                                    83,
+                                    69,
+                                    78,
+                                    83,
+                                    79,
+                                    82,
+                                    95,
+                                    72,
+                                    79,
+                                    83,
+                                    84
+                                ]
+                            },
+                            {
+                                "kind": "account",
+                                "path": "host"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "name": "sensor",
+                    "pda": {
+                        "seeds": [
+                            {
+                                "kind": "const",
+                                "value": [
+                                    83,
+                                    69,
+                                    78,
+                                    83,
+                                    79,
+                                    82
+                                ]
+                            },
+                            {
+                                "kind": "account",
+                                "path": "sensor_host_state"
+                            },
+                            {
+                                "kind": "arg",
+                                "path": "_sensor_id"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "name": "token_mint",
+                    "pda": {
+                        "seeds": [
+                            {
+                                "kind": "const",
+                                "value": [
+                                    84,
+                                    79,
+                                    75,
+                                    69,
+                                    78,
+                                    95,
+                                    77,
+                                    73,
+                                    78,
+                                    84
+                                ]
+                            }
+                        ]
+                    }
+                },
+                {
+                    "name": "host_token_ata",
+                    "pda": {
+                        "seeds": [
+                            {
+                                "kind": "account",
+                                "path": "host"
+                            },
+                            {
+                                "kind": "account",
+                                "path": "token_program"
+                            },
+                            {
+                                "kind": "account",
+                                "path": "token_mint"
+                            }
+                        ],
+                        "program": {
+                            "kind": "const",
+                            "value": [
+                                140,
+                                151,
+                                37,
+                                143,
+                                78,
+                                36,
+                                137,
+                                241,
+                                187,
+                                61,
+                                16,
+                                41,
+                                20,
+                                142,
+                                13,
+                                131,
+                                11,
+                                90,
+                                19,
+                                153,
+                                218,
+                                255,
+                                16,
+                                132,
+                                4,
+                                142,
+                                123,
+                                216,
+                                219,
+                                233,
+                                248,
+                                89
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "vault",
+                    "pda": {
+                        "seeds": [
+                            {
+                                "kind": "const",
+                                "value": [
+                                    86,
+                                    65,
+                                    85,
+                                    76,
+                                    84
+                                ]
+                            }
+                        ]
+                    }
+                },
+                {
+                    "name": "vault_token_ata",
+                    "pda": {
+                        "seeds": [
+                            {
+                                "kind": "account",
+                                "path": "vault"
+                            },
+                            {
+                                "kind": "account",
+                                "path": "token_program"
+                            },
+                            {
+                                "kind": "account",
+                                "path": "token_mint"
+                            }
+                        ],
+                        "program": {
+                            "kind": "const",
+                            "value": [
+                                140,
+                                151,
+                                37,
+                                143,
+                                78,
+                                36,
+                                137,
+                                241,
+                                187,
+                                61,
+                                16,
+                                41,
+                                20,
+                                142,
+                                13,
+                                131,
+                                11,
+                                90,
+                                19,
+                                153,
+                                218,
+                                255,
+                                16,
+                                132,
+                                4,
+                                142,
+                                123,
+                                216,
+                                219,
+                                233,
+                                248,
+                                89
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "token_program"
+                }
+            ],
+            "args": [
+                {
+                    "name": "sensor_id",
+                    "type": "u64"
+                }
+            ]
+        },
+        {
+            "name": "initialize_global_state",
+            "discriminator": [
+                232,
+                254,
+                209,
+                244,
+                123,
+                89,
+                154,
+                207
+            ],
+            "accounts": [
+                {
+                    "name": "authority",
+                    "writable": true,
+                    "signer": true
+                },
+                {
+                    "name": "program",
+                    "address": "J8vn4oXKvsJyyRPcEscXcPkdpcEz4EoPhjM7ebVcvhqi"
+                },
+                {
+                    "name": "program_data"
+                },
+                {
+                    "name": "global_state",
+                    "writable": true,
+                    "pda": {
+                        "seeds": [
+                            {
+                                "kind": "const",
+                                "value": [
+                                    71,
+                                    76,
+                                    79,
+                                    66,
+                                    65,
+                                    76,
+                                    95,
+                                    83,
+                                    84,
+                                    65,
+                                    84,
+                                    69
+                                ]
+                            }
+                        ]
+                    }
+                },
+                {
+                    "name": "token_mint",
+                    "writable": true,
+                    "pda": {
+                        "seeds": [
+                            {
+                                "kind": "const",
+                                "value": [
+                                    84,
+                                    79,
+                                    75,
+                                    69,
+                                    78,
+                                    95,
+                                    77,
+                                    73,
+                                    78,
+                                    84
+                                ]
+                            }
+                        ]
+                    }
+                },
+                {
+                    "name": "vault",
+                    "writable": true,
+                    "pda": {
+                        "seeds": [
+                            {
+                                "kind": "const",
+                                "value": [
+                                    86,
+                                    65,
+                                    85,
+                                    76,
+                                    84
+                                ]
+                            }
+                        ]
+                    }
+                },
+                {
+                    "name": "vault_token_ata",
+                    "writable": true,
+                    "pda": {
+                        "seeds": [
+                            {
+                                "kind": "account",
+                                "path": "vault"
+                            },
+                            {
+                                "kind": "account",
+                                "path": "token_program"
+                            },
+                            {
+                                "kind": "account",
+                                "path": "token_mint"
+                            }
+                        ],
+                        "program": {
+                            "kind": "const",
+                            "value": [
+                                140,
+                                151,
+                                37,
+                                143,
+                                78,
+                                36,
+                                137,
+                                241,
+                                187,
+                                61,
+                                16,
+                                41,
+                                20,
+                                142,
+                                13,
+                                131,
+                                11,
+                                90,
+                                19,
+                                153,
+                                218,
+                                255,
+                                16,
+                                132,
+                                4,
+                                142,
+                                123,
+                                216,
+                                219,
+                                233,
+                                248,
+                                89
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "token_program"
+                },
+                {
+                    "name": "associated_token_program",
+                    "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
+                },
+                {
+                    "name": "system_program",
+                    "address": "11111111111111111111111111111111"
+                }
+            ],
+            "args": [
+                {
+                    "name": "token_price_in_lamports",
+                    "type": "u64"
+                }
+            ]
+        },
+        {
+            "name": "pay_sensor_data",
+            "discriminator": [
+                135,
+                184,
+                250,
+                16,
+                122,
+                176,
+                162,
+                219
+            ],
+            "accounts": [
+                {
+                    "name": "payer",
+                    "writable": true,
+                    "signer": true
+                },
+                {
+                    "name": "payer_token_ata",
+                    "writable": true,
+                    "pda": {
+                        "seeds": [
+                            {
+                                "kind": "account",
+                                "path": "payer"
+                            },
+                            {
+                                "kind": "account",
+                                "path": "token_program"
+                            },
+                            {
+                                "kind": "account",
+                                "path": "mint"
+                            }
+                        ],
+                        "program": {
+                            "kind": "const",
+                            "value": [
+                                140,
+                                151,
+                                37,
+                                143,
+                                78,
+                                36,
+                                137,
+                                241,
+                                187,
+                                61,
+                                16,
+                                41,
+                                20,
+                                142,
+                                13,
+                                131,
+                                11,
+                                90,
+                                19,
+                                153,
+                                218,
+                                255,
+                                16,
+                                132,
+                                4,
+                                142,
+                                123,
+                                216,
+                                219,
+                                233,
+                                248,
+                                89
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "host_token_ata",
+                    "writable": true,
+                    "pda": {
+                        "seeds": [
+                            {
+                                "kind": "arg",
+                                "path": "_host"
+                            },
+                            {
+                                "kind": "account",
+                                "path": "token_program"
+                            },
+                            {
+                                "kind": "account",
+                                "path": "mint"
+                            }
+                        ],
+                        "program": {
+                            "kind": "const",
+                            "value": [
+                                140,
+                                151,
+                                37,
+                                143,
+                                78,
+                                36,
+                                137,
+                                241,
+                                187,
+                                61,
+                                16,
+                                41,
+                                20,
+                                142,
+                                13,
+                                131,
+                                11,
+                                90,
+                                19,
+                                153,
+                                218,
+                                255,
+                                16,
+                                132,
+                                4,
+                                142,
+                                123,
+                                216,
+                                219,
+                                233,
+                                248,
+                                89
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "mint",
+                    "pda": {
+                        "seeds": [
+                            {
+                                "kind": "const",
+                                "value": [
+                                    84,
+                                    79,
+                                    75,
+                                    69,
+                                    78,
+                                    95,
+                                    77,
+                                    73,
+                                    78,
+                                    84
+                                ]
+                            }
+                        ]
+                    }
+                },
+                {
+                    "name": "sensor_host",
+                    "pda": {
+                        "seeds": [
+                            {
+                                "kind": "const",
+                                "value": [
+                                    83,
+                                    69,
+                                    78,
+                                    83,
+                                    79,
+                                    82,
+                                    95,
+                                    72,
+                                    79,
+                                    83,
+                                    84
+                                ]
+                            },
+                            {
+                                "kind": "arg",
+                                "path": "_host"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "name": "sensor",
+                    "pda": {
+                        "seeds": [
+                            {
+                                "kind": "const",
+                                "value": [
+                                    83,
+                                    69,
+                                    78,
+                                    83,
+                                    79,
+                                    82
+                                ]
+                            },
+                            {
+                                "kind": "account",
+                                "path": "sensor_host"
+                            },
+                            {
+                                "kind": "arg",
+                                "path": "sensor_id"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "name": "token_program"
+                }
+            ],
+            "args": [
+                {
+                    "name": "host",
+                    "type": "pubkey"
+                },
+                {
+                    "name": "sensor_id",
+                    "type": "u64"
+                }
+            ]
+        },
+        {
+            "name": "register_sensor",
+            "discriminator": [
+                130,
+                120,
+                3,
+                101,
+                228,
+                123,
+                18,
+                95
+            ],
+            "accounts": [
+                {
+                    "name": "host",
+                    "writable": true,
+                    "signer": true
+                },
+                {
+                    "name": "sensor_host_state",
+                    "pda": {
+                        "seeds": [
+                            {
+                                "kind": "const",
+                                "value": [
+                                    83,
+                                    69,
+                                    78,
+                                    83,
+                                    79,
+                                    82,
+                                    95,
+                                    72,
+                                    79,
+                                    83,
+                                    84
+                                ]
+                            },
+                            {
+                                "kind": "account",
+                                "path": "host"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "name": "sensor",
+                    "writable": true,
+                    "pda": {
+                        "seeds": [
+                            {
+                                "kind": "const",
+                                "value": [
+                                    83,
+                                    69,
+                                    78,
+                                    83,
+                                    79,
+                                    82
+                                ]
+                            },
+                            {
+                                "kind": "account",
+                                "path": "sensor_host_state"
+                            },
+                            {
+                                "kind": "account",
+                                "path": "sensor_host_state.sensor_counter",
+                                "account": "SensorHost"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "name": "system_program",
+                    "address": "11111111111111111111111111111111"
+                }
+            ],
+            "args": [
+                {
+                    "name": "latitude",
+                    "type": "i64"
+                },
+                {
+                    "name": "longitude",
+                    "type": "i64"
+                }
+            ]
+        },
+        {
+            "name": "sell_tokens",
+            "discriminator": [
+                114,
+                242,
+                25,
+                12,
+                62,
+                126,
+                92,
+                2
+            ],
+            "accounts": [
+                {
+                    "name": "seller",
+                    "writable": true,
+                    "signer": true
+                },
+                {
+                    "name": "global_state",
+                    "pda": {
+                        "seeds": [
+                            {
+                                "kind": "const",
+                                "value": [
+                                    71,
+                                    76,
+                                    79,
+                                    66,
+                                    65,
+                                    76,
+                                    95,
+                                    83,
+                                    84,
+                                    65,
+                                    84,
+                                    69
+                                ]
+                            }
+                        ]
+                    }
+                },
+                {
+                    "name": "mint",
+                    "writable": true,
+                    "pda": {
+                        "seeds": [
+                            {
+                                "kind": "const",
+                                "value": [
+                                    84,
+                                    79,
+                                    75,
+                                    69,
+                                    78,
+                                    95,
+                                    77,
+                                    73,
+                                    78,
+                                    84
+                                ]
+                            }
+                        ]
+                    }
+                },
+                {
+                    "name": "vault",
+                    "writable": true,
+                    "pda": {
+                        "seeds": [
+                            {
+                                "kind": "const",
+                                "value": [
+                                    86,
+                                    65,
+                                    85,
+                                    76,
+                                    84
+                                ]
+                            }
+                        ]
+                    }
+                },
+                {
+                    "name": "seller_token_ata",
+                    "writable": true,
+                    "pda": {
+                        "seeds": [
+                            {
+                                "kind": "account",
+                                "path": "seller"
+                            },
+                            {
+                                "kind": "account",
+                                "path": "token_program"
+                            },
+                            {
+                                "kind": "account",
+                                "path": "mint"
+                            }
+                        ],
+                        "program": {
+                            "kind": "const",
+                            "value": [
+                                140,
+                                151,
+                                37,
+                                143,
+                                78,
+                                36,
+                                137,
+                                241,
+                                187,
+                                61,
+                                16,
+                                41,
+                                20,
+                                142,
+                                13,
+                                131,
+                                11,
+                                90,
+                                19,
+                                153,
+                                218,
+                                255,
+                                16,
+                                132,
+                                4,
+                                142,
+                                123,
+                                216,
+                                219,
+                                233,
+                                248,
+                                89
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "token_program"
+                },
+                {
+                    "name": "associated_token_program",
+                    "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
+                }
+            ],
+            "args": [
+                {
+                    "name": "amount",
+                    "type": "u64"
+                }
+            ]
+        },
+        {
+            "name": "slash_collateral",
+            "discriminator": [
+                48,
+                90,
+                11,
+                43,
+                179,
+                65,
+                184,
+                4
+            ],
+            "accounts": [
+                {
+                    "name": "authority",
+                    "writable": true,
+                    "signer": true
+                },
+                {
+                    "name": "program",
+                    "address": "J8vn4oXKvsJyyRPcEscXcPkdpcEz4EoPhjM7ebVcvhqi"
+                },
+                {
+                    "name": "program_data"
+                },
+                {
+                    "name": "sensor_host_state",
+                    "pda": {
+                        "seeds": [
+                            {
+                                "kind": "const",
+                                "value": [
+                                    83,
+                                    69,
+                                    78,
+                                    83,
+                                    79,
+                                    82,
+                                    95,
+                                    72,
+                                    79,
+                                    83,
+                                    84
+                                ]
+                            },
+                            {
+                                "kind": "arg",
+                                "path": "_host"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "name": "sensor",
+                    "pda": {
+                        "seeds": [
+                            {
+                                "kind": "const",
+                                "value": [
+                                    83,
+                                    69,
+                                    78,
+                                    83,
+                                    79,
+                                    82
+                                ]
+                            },
+                            {
+                                "kind": "account",
+                                "path": "sensor_host_state"
+                            },
+                            {
+                                "kind": "arg",
+                                "path": "_sensor_id"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "name": "token_mint",
+                    "pda": {
+                        "seeds": [
+                            {
+                                "kind": "const",
+                                "value": [
+                                    84,
+                                    79,
+                                    75,
+                                    69,
+                                    78,
+                                    95,
+                                    77,
+                                    73,
+                                    78,
+                                    84
+                                ]
+                            }
+                        ]
+                    }
+                },
+                {
+                    "name": "vault",
+                    "pda": {
+                        "seeds": [
+                            {
+                                "kind": "const",
+                                "value": [
+                                    86,
+                                    65,
+                                    85,
+                                    76,
+                                    84
+                                ]
+                            }
+                        ]
+                    }
+                },
+                {
+                    "name": "vault_token_ata",
+                    "pda": {
+                        "seeds": [
+                            {
+                                "kind": "account",
+                                "path": "vault"
+                            },
+                            {
+                                "kind": "account",
+                                "path": "token_program"
+                            },
+                            {
+                                "kind": "account",
+                                "path": "token_mint"
+                            }
+                        ],
+                        "program": {
+                            "kind": "const",
+                            "value": [
+                                140,
+                                151,
+                                37,
+                                143,
+                                78,
+                                36,
+                                137,
+                                241,
+                                187,
+                                61,
+                                16,
+                                41,
+                                20,
+                                142,
+                                13,
+                                131,
+                                11,
+                                90,
+                                19,
+                                153,
+                                218,
+                                255,
+                                16,
+                                132,
+                                4,
+                                142,
+                                123,
+                                216,
+                                219,
+                                233,
+                                248,
+                                89
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "host_token_ata",
+                    "pda": {
+                        "seeds": [
+                            {
+                                "kind": "arg",
+                                "path": "_host"
+                            },
+                            {
+                                "kind": "account",
+                                "path": "token_program"
+                            },
+                            {
+                                "kind": "account",
+                                "path": "token_mint"
+                            }
+                        ],
+                        "program": {
+                            "kind": "const",
+                            "value": [
+                                140,
+                                151,
+                                37,
+                                143,
+                                78,
+                                36,
+                                137,
+                                241,
+                                187,
+                                61,
+                                16,
+                                41,
+                                20,
+                                142,
+                                13,
+                                131,
+                                11,
+                                90,
+                                19,
+                                153,
+                                218,
+                                255,
+                                16,
+                                132,
+                                4,
+                                142,
+                                123,
+                                216,
+                                219,
+                                233,
+                                248,
+                                89
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "token_program"
+                }
+            ],
+            "args": [
+                {
+                    "name": "host",
+                    "type": "pubkey"
+                },
+                {
+                    "name": "sensor_id",
+                    "type": "u64"
+                }
+            ]
+        },
+        {
+            "name": "withdraw_collateral",
+            "discriminator": [
+                115,
+                135,
+                168,
+                106,
+                139,
+                214,
+                138,
+                150
+            ],
+            "accounts": [
+                {
+                    "name": "host",
+                    "writable": true,
+                    "signer": true
+                },
+                {
+                    "name": "sensor_host_state",
+                    "pda": {
+                        "seeds": [
+                            {
+                                "kind": "const",
+                                "value": [
+                                    83,
+                                    69,
+                                    78,
+                                    83,
+                                    79,
+                                    82,
+                                    95,
+                                    72,
+                                    79,
+                                    83,
+                                    84
+                                ]
+                            },
+                            {
+                                "kind": "account",
+                                "path": "host"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "name": "sensor",
+                    "pda": {
+                        "seeds": [
+                            {
+                                "kind": "const",
+                                "value": [
+                                    83,
+                                    69,
+                                    78,
+                                    83,
+                                    79,
+                                    82
+                                ]
+                            },
+                            {
+                                "kind": "account",
+                                "path": "sensor_host_state"
+                            },
+                            {
+                                "kind": "arg",
+                                "path": "_sensor_id"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "name": "token_mint",
+                    "pda": {
+                        "seeds": [
+                            {
+                                "kind": "const",
+                                "value": [
+                                    84,
+                                    79,
+                                    75,
+                                    69,
+                                    78,
+                                    95,
+                                    77,
+                                    73,
+                                    78,
+                                    84
+                                ]
+                            }
+                        ]
+                    }
+                },
+                {
+                    "name": "host_token_ata",
+                    "pda": {
+                        "seeds": [
+                            {
+                                "kind": "account",
+                                "path": "host"
+                            },
+                            {
+                                "kind": "account",
+                                "path": "token_program"
+                            },
+                            {
+                                "kind": "account",
+                                "path": "token_mint"
+                            }
+                        ],
+                        "program": {
+                            "kind": "const",
+                            "value": [
+                                140,
+                                151,
+                                37,
+                                143,
+                                78,
+                                36,
+                                137,
+                                241,
+                                187,
+                                61,
+                                16,
+                                41,
+                                20,
+                                142,
+                                13,
+                                131,
+                                11,
+                                90,
+                                19,
+                                153,
+                                218,
+                                255,
+                                16,
+                                132,
+                                4,
+                                142,
+                                123,
+                                216,
+                                219,
+                                233,
+                                248,
+                                89
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "vault",
+                    "pda": {
+                        "seeds": [
+                            {
+                                "kind": "const",
+                                "value": [
+                                    86,
+                                    65,
+                                    85,
+                                    76,
+                                    84
+                                ]
+                            }
+                        ]
+                    }
+                },
+                {
+                    "name": "vault_token_ata",
+                    "pda": {
+                        "seeds": [
+                            {
+                                "kind": "account",
+                                "path": "vault"
+                            },
+                            {
+                                "kind": "account",
+                                "path": "token_program"
+                            },
+                            {
+                                "kind": "account",
+                                "path": "token_mint"
+                            }
+                        ],
+                        "program": {
+                            "kind": "const",
+                            "value": [
+                                140,
+                                151,
+                                37,
+                                143,
+                                78,
+                                36,
+                                137,
+                                241,
+                                187,
+                                61,
+                                16,
+                                41,
+                                20,
+                                142,
+                                13,
+                                131,
+                                11,
+                                90,
+                                19,
+                                153,
+                                218,
+                                255,
+                                16,
+                                132,
+                                4,
+                                142,
+                                123,
+                                216,
+                                219,
+                                233,
+                                248,
+                                89
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "token_program"
+                }
+            ],
+            "args": [
+                {
+                    "name": "sensor_id",
+                    "type": "u64"
+                }
+            ]
+        }
+    ],
+    "accounts": [
+        {
+            "name": "GlobalState",
+            "discriminator": [
+                163,
+                46,
+                74,
+                168,
+                216,
+                123,
+                133,
+                98
+            ]
+        },
+        {
+            "name": "Sensor",
+            "discriminator": [
+                134,
+                105,
+                67,
+                177,
+                57,
+                239,
+                163,
+                212
+            ]
+        },
+        {
+            "name": "SensorHost",
+            "discriminator": [
+                225,
+                44,
+                62,
+                31,
+                215,
+                19,
+                232,
+                99
+            ]
+        },
+        {
+            "name": "Vault",
+            "discriminator": [
+                211,
+                8,
+                232,
+                43,
+                2,
+                152,
+                117,
+                119
+            ]
+        }
+    ],
+    "events": [
+        {
+            "name": "PaySensorDataRequest",
+            "discriminator": [
+                160,
+                101,
+                53,
+                183,
+                50,
+                139,
+                232,
+                84
+            ]
+        }
+    ],
+    "errors": [
+        {
+            "code": 6000,
+            "name": "WrongSensorStatus",
+            "msg": "Wrong sensor status"
+        },
+        {
+            "code": 6001,
+            "name": "Overflow",
+            "msg": "Overflow"
+        }
+    ],
+    "types": [
+        {
+            "name": "GlobalState",
+            "type": {
+                "kind": "struct",
+                "fields": [
+                    {
+                        "name": "token_price_in_lamports",
+                        "type": "u64"
+                    },
+                    {
+                        "name": "bump",
+                        "type": "u8"
+                    }
+                ]
+            }
+        },
+        {
+            "name": "PaySensorDataRequest",
+            "type": {
+                "kind": "struct",
+                "fields": [
+                    {
+                        "name": "sensor_id",
+                        "type": "u64"
+                    },
+                    {
+                        "name": "payer",
+                        "type": "pubkey"
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Sensor",
+            "type": {
+                "kind": "struct",
+                "fields": [
+                    {
+                        "name": "id",
+                        "type": "u64"
+                    },
+                    {
+                        "name": "host",
+                        "type": "pubkey"
+                    },
+                    {
+                        "name": "latitude",
+                        "type": "i64"
+                    },
+                    {
+                        "name": "longitude",
+                        "type": "i64"
+                    },
+                    {
+                        "name": "status",
+                        "type": {
+                            "defined": {
+                                "name": "SensorStatus"
+                            }
+                        }
+                    },
+                    {
+                        "name": "last_collateralized_at",
+                        "type": "i64"
+                    },
+                    {
+                        "name": "last_uncollateralized_at",
+                        "type": "i64"
+                    },
+                    {
+                        "name": "last_slashed_at",
+                        "type": "i64"
+                    },
+                    {
+                        "name": "total_income",
+                        "type": "u64"
+                    },
+                    {
+                        "name": "bump",
+                        "type": "u8"
+                    }
+                ]
+            }
+        },
+        {
+            "name": "SensorHost",
+            "type": {
+                "kind": "struct",
+                "fields": [
+                    {
+                        "name": "address",
+                        "type": "pubkey"
+                    },
+                    {
+                        "name": "sensor_counter",
+                        "type": "u64"
+                    },
+                    {
+                        "name": "bump",
+                        "type": "u8"
+                    }
+                ]
+            }
+        },
+        {
+            "name": "SensorStatus",
+            "type": {
+                "kind": "enum",
+                "variants": [
+                    {
+                        "name": "Uncollateralized"
+                    },
+                    {
+                        "name": "Collateralized"
+                    },
+                    {
+                        "name": "Slashed"
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Vault",
+            "type": {
+                "kind": "struct",
+                "fields": [
+                    {
+                        "name": "bump",
+                        "type": "u8"
+                    }
+                ]
+            }
+        }
+    ],
+    "constants": [
+        {
+            "name": "FEE_SEED",
+            "type": "string",
+            "value": "\"FEE\""
+        },
+        {
+            "name": "GLOBAL_STATE_SEED",
+            "type": "string",
+            "value": "\"GLOBAL_STATE\""
+        },
+        {
+            "name": "MINT_DECIMALS",
+            "type": "u8",
+            "value": "9"
+        },
+        {
+            "name": "SENSOR_COLLATERAL_AMOUNT",
+            "type": "u64",
+            "value": "900"
+        },
+        {
+            "name": "SENSOR_DATA_REQUEST_COST",
+            "type": "u64",
+            "value": "10000000"
+        },
+        {
+            "name": "SENSOR_HOST_SEED",
+            "type": "string",
+            "value": "\"SENSOR_HOST\""
+        },
+        {
+            "name": "SENSOR_SEED",
+            "type": "string",
+            "value": "\"SENSOR\""
+        },
+        {
+            "name": "TOKEN_MINT_SEED",
+            "type": "string",
+            "value": "\"TOKEN_MINT\""
+        },
+        {
+            "name": "VAULT_SEED",
+            "type": "string",
+            "value": "\"VAULT\""
+        }
+    ]
+}

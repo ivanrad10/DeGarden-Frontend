@@ -1,5 +1,5 @@
 {
-    "address": "J8vn4oXKvsJyyRPcEscXcPkdpcEz4EoPhjM7ebVcvhqi",
+    "address": "H3B2URUN8BMxZvxx6yit2n8sRRWGo8bBdew4yDosurjG",
     "metadata": {
         "name": "de_garden",
         "version": "0.1.0",
@@ -352,18 +352,12 @@
                 },
                 {
                     "name": "sensor",
+                    "writable": true,
                     "pda": {
                         "seeds": [
                             {
-                                "kind": "const",
-                                "value": [
-                                    83,
-                                    69,
-                                    78,
-                                    83,
-                                    79,
-                                    82
-                                ]
+                                "kind": "arg",
+                                "path": "_sensor_seed"
                             },
                             {
                                 "kind": "account",
@@ -400,6 +394,7 @@
                 },
                 {
                     "name": "host_token_ata",
+                    "writable": true,
                     "pda": {
                         "seeds": [
                             {
@@ -473,6 +468,7 @@
                 },
                 {
                     "name": "vault_token_ata",
+                    "writable": true,
                     "pda": {
                         "seeds": [
                             {
@@ -533,6 +529,10 @@
             ],
             "args": [
                 {
+                    "name": "sensor_seed",
+                    "type": "string"
+                },
+                {
                     "name": "sensor_id",
                     "type": "u64"
                 }
@@ -558,7 +558,7 @@
                 },
                 {
                     "name": "program",
-                    "address": "J8vn4oXKvsJyyRPcEscXcPkdpcEz4EoPhjM7ebVcvhqi"
+                    "address": "H3B2URUN8BMxZvxx6yit2n8sRRWGo8bBdew4yDosurjG"
                 },
                 {
                     "name": "program_data"
@@ -891,15 +891,8 @@
                     "pda": {
                         "seeds": [
                             {
-                                "kind": "const",
-                                "value": [
-                                    83,
-                                    69,
-                                    78,
-                                    83,
-                                    79,
-                                    82
-                                ]
+                                "kind": "arg",
+                                "path": "_sensor_seed"
                             },
                             {
                                 "kind": "account",
@@ -918,6 +911,10 @@
             ],
             "args": [
                 {
+                    "name": "_sensor_seed",
+                    "type": "string"
+                },
+                {
                     "name": "host",
                     "type": "pubkey"
                 },
@@ -928,16 +925,16 @@
             ]
         },
         {
-            "name": "register_sensor",
+            "name": "register_flowmeter_sensor",
             "discriminator": [
-                130,
-                120,
-                3,
-                101,
-                228,
-                123,
-                18,
-                95
+                43,
+                190,
+                29,
+                182,
+                85,
+                35,
+                254,
+                115
             ],
             "accounts": [
                 {
@@ -947,6 +944,7 @@
                 },
                 {
                     "name": "sensor_host_state",
+                    "writable": true,
                     "pda": {
                         "seeds": [
                             {
@@ -973,13 +971,23 @@
                     }
                 },
                 {
-                    "name": "sensor",
+                    "name": "flowmeter_sensor",
                     "writable": true,
                     "pda": {
                         "seeds": [
                             {
                                 "kind": "const",
                                 "value": [
+                                    70,
+                                    76,
+                                    79,
+                                    87,
+                                    77,
+                                    69,
+                                    84,
+                                    69,
+                                    82,
+                                    95,
                                     83,
                                     69,
                                     78,
@@ -994,7 +1002,106 @@
                             },
                             {
                                 "kind": "account",
-                                "path": "sensor_host_state.sensor_counter",
+                                "path": "sensor_host_state.flowmeter_sensor_counter",
+                                "account": "SensorHost"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "name": "system_program",
+                    "address": "11111111111111111111111111111111"
+                }
+            ],
+            "args": [
+                {
+                    "name": "latitude",
+                    "type": "i64"
+                },
+                {
+                    "name": "longitude",
+                    "type": "i64"
+                }
+            ]
+        },
+        {
+            "name": "register_moisture_sensor",
+            "discriminator": [
+                56,
+                2,
+                253,
+                165,
+                173,
+                163,
+                106,
+                122
+            ],
+            "accounts": [
+                {
+                    "name": "host",
+                    "writable": true,
+                    "signer": true
+                },
+                {
+                    "name": "sensor_host_state",
+                    "writable": true,
+                    "pda": {
+                        "seeds": [
+                            {
+                                "kind": "const",
+                                "value": [
+                                    83,
+                                    69,
+                                    78,
+                                    83,
+                                    79,
+                                    82,
+                                    95,
+                                    72,
+                                    79,
+                                    83,
+                                    84
+                                ]
+                            },
+                            {
+                                "kind": "account",
+                                "path": "host"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "name": "moisture_sensor",
+                    "writable": true,
+                    "pda": {
+                        "seeds": [
+                            {
+                                "kind": "const",
+                                "value": [
+                                    77,
+                                    79,
+                                    73,
+                                    83,
+                                    84,
+                                    85,
+                                    82,
+                                    69,
+                                    95,
+                                    83,
+                                    69,
+                                    78,
+                                    83,
+                                    79,
+                                    82
+                                ]
+                            },
+                            {
+                                "kind": "account",
+                                "path": "sensor_host_state"
+                            },
+                            {
+                                "kind": "account",
+                                "path": "sensor_host_state.moisture_sensor_counter",
                                 "account": "SensorHost"
                             }
                         ]
@@ -1191,7 +1298,7 @@
                 },
                 {
                     "name": "program",
-                    "address": "J8vn4oXKvsJyyRPcEscXcPkdpcEz4EoPhjM7ebVcvhqi"
+                    "address": "H3B2URUN8BMxZvxx6yit2n8sRRWGo8bBdew4yDosurjG"
                 },
                 {
                     "name": "program_data"
@@ -1228,15 +1335,8 @@
                     "pda": {
                         "seeds": [
                             {
-                                "kind": "const",
-                                "value": [
-                                    83,
-                                    69,
-                                    78,
-                                    83,
-                                    79,
-                                    82
-                                ]
+                                "kind": "arg",
+                                "path": "_sensor_seed"
                             },
                             {
                                 "kind": "account",
@@ -1410,6 +1510,10 @@
                     "type": "pubkey"
                 },
                 {
+                    "name": "sensor_seed",
+                    "type": "string"
+                },
+                {
                     "name": "sensor_id",
                     "type": "u64"
                 }
@@ -1462,18 +1566,12 @@
                 },
                 {
                     "name": "sensor",
+                    "writable": true,
                     "pda": {
                         "seeds": [
                             {
-                                "kind": "const",
-                                "value": [
-                                    83,
-                                    69,
-                                    78,
-                                    83,
-                                    79,
-                                    82
-                                ]
+                                "kind": "arg",
+                                "path": "_sensor_seed"
                             },
                             {
                                 "kind": "account",
@@ -1510,6 +1608,7 @@
                 },
                 {
                     "name": "host_token_ata",
+                    "writable": true,
                     "pda": {
                         "seeds": [
                             {
@@ -1583,6 +1682,7 @@
                 },
                 {
                     "name": "vault_token_ata",
+                    "writable": true,
                     "pda": {
                         "seeds": [
                             {
@@ -1642,6 +1742,10 @@
                 }
             ],
             "args": [
+                {
+                    "name": "sensor_seed",
+                    "type": "string"
+                },
                 {
                     "name": "sensor_id",
                     "type": "u64"
@@ -1773,6 +1877,14 @@
                         "type": "u64"
                     },
                     {
+                        "name": "model",
+                        "type": {
+                            "defined": {
+                                "name": "SensorType"
+                            }
+                        }
+                    },
+                    {
                         "name": "host",
                         "type": "pubkey"
                     },
@@ -1805,10 +1917,6 @@
                         "type": "i64"
                     },
                     {
-                        "name": "total_income",
-                        "type": "u64"
-                    },
-                    {
                         "name": "bump",
                         "type": "u8"
                     }
@@ -1825,7 +1933,11 @@
                         "type": "pubkey"
                     },
                     {
-                        "name": "sensor_counter",
+                        "name": "moisture_sensor_counter",
+                        "type": "u64"
+                    },
+                    {
+                        "name": "flowmeter_sensor_counter",
                         "type": "u64"
                     },
                     {
@@ -1853,6 +1965,20 @@
             }
         },
         {
+            "name": "SensorType",
+            "type": {
+                "kind": "enum",
+                "variants": [
+                    {
+                        "name": "Moisture"
+                    },
+                    {
+                        "name": "Flowmeter"
+                    }
+                ]
+            }
+        },
+        {
             "name": "Vault",
             "type": {
                 "kind": "struct",
@@ -1872,6 +1998,11 @@
             "value": "\"FEE\""
         },
         {
+            "name": "FLOWMETER_SENSOR_SEED",
+            "type": "string",
+            "value": "\"FLOWMETER_SENSOR\""
+        },
+        {
             "name": "GLOBAL_STATE_SEED",
             "type": "string",
             "value": "\"GLOBAL_STATE\""
@@ -1882,9 +2013,14 @@
             "value": "9"
         },
         {
+            "name": "MOISTURE_SENSOR_SEED",
+            "type": "string",
+            "value": "\"MOISTURE_SENSOR\""
+        },
+        {
             "name": "SENSOR_COLLATERAL_AMOUNT",
             "type": "u64",
-            "value": "900"
+            "value": "100000000000"
         },
         {
             "name": "SENSOR_DATA_REQUEST_COST",
@@ -1895,11 +2031,6 @@
             "name": "SENSOR_HOST_SEED",
             "type": "string",
             "value": "\"SENSOR_HOST\""
-        },
-        {
-            "name": "SENSOR_SEED",
-            "type": "string",
-            "value": "\"SENSOR\""
         },
         {
             "name": "TOKEN_MINT_SEED",

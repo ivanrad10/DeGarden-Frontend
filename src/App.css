@@ -1,21 +1,74 @@
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+  width: 100%;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  position: relative;
+  top: 0;
+  right: 0;
+  padding: 0 50px;
+  display: flex;
+  height: 80px;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 1000;
+}
+
+header .logo {
+  height: 2rem;
+  width: auto;
+}
+
+header .controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.app-footer {
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 220px; /* whatever reduced height you like */
+  background: url("../public/footer5.svg") no-repeat center center;
+  background-size: cover; /* scale the entire image to fit */
+  z-index: 1000;
 }
 
 .logo {
   height: 6em;
-  padding: 1.5em;
   will-change: filter;
   transition: filter 300ms;
+  cursor: pointer;
 }
 .logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+  filter: drop-shadow(0 0 2em #25aae1);
 }
 .logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+  filter: drop-shadow(0 0 2em #25aae1);
+}
+
+.wallet-adapter-button-trigger {
+  max-height: 50px !important;
+  max-width: 170px !important;
+  background-color: transparent !important;
+  border-radius: 24px !important;
+  border: 2px solid #d9961a !important;
+  font-size: 16px !important;
+  font-family: Arial, Helvetica, sans-serif !important;
+  transition: background-color 0.3s ease-in-out !important;
+  color: #d9961a !important;
+}
+
+.wallet-adapter-button-trigger:hover {
+  background-color: #d9961a !important;
+  color: white !important;
 }
 
 @keyframes logo-spin {

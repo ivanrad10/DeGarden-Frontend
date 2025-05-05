@@ -1,4 +1,4 @@
-import { IdlAccounts, Program } from "@coral-xyz/anchor";
+import { Idl, IdlAccounts, Program } from "@coral-xyz/anchor";
 import { DeGarden } from "./de_garden";
 import IDL from "./idl.json";
 import { clusterApiUrl, Connection, PublicKey } from "@solana/web3.js";
@@ -14,6 +14,17 @@ export const [globalStatePDA] = PublicKey.findProgramAddressSync(
   program.programId,
 );
 
+export const [tokenMintPDA] = PublicKey.findProgramAddressSync(
+  [Buffer.from("TOKEN_MINT")],
+  program.programId,
+);
+
+export const [vaultPDA] = PublicKey.findProgramAddressSync(
+  [Buffer.from("VAULT")],
+  program.programId,
+);
+
 // This is just a TypeScript type for the Counter data structure based on the IDL
 // We need this so TypeScript doesn't yell at us
 export type GlobalStateData = IdlAccounts<DeGarden>["globalState"];
+export type SensorHost = IdlAccounts<DeGarden>["sensorHost"];

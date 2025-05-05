@@ -13,7 +13,12 @@ import "./App.css";
 
 // Default styles that can be overridden by your app
 import "@solana/wallet-adapter-react-ui/styles.css";
-import GlobalState from "./components/global-state";
+import MenuBar from "./components/menu-bar";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import SensorPage from "./components/sensor-page";
+import HomePage from "./components/home-page";
+import SwapTokens from "./components/swap-tokens-page";
+import ExploreSensors from "./components/explore-sensors-page";
 
 function App() {
   // The network can be set to 'devnet', 'testnet', or 'mainnet-beta'.
@@ -26,16 +31,31 @@ function App() {
       // if desired, manually define specific/custom wallets here (normally not required)
       // otherwise, the wallet-adapter will auto detect the wallets a user's browser has available
     ],
-    [network],
+    [network]
   );
 
   return (
     <ConnectionProvider endpoint={endpoint}>
       <WalletProvider wallets={wallets} autoConnect>
         <WalletModalProvider>
-          <WalletMultiButton />
-          <h1>Hello Solana</h1>
-          <GlobalState />
+          <Router>
+            <header>
+              <Link to="/">
+                <img src="../public/logo.svg" alt="Logo" className="logo" />
+              </Link>
+              <div className="controls">
+                <MenuBar />
+                <WalletMultiButton />
+              </div>
+            </header>
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/swap-tokens" element={<SwapTokens />} />
+              <Route path="/sensors/:hostAddress" element={<SensorPage />} />
+              <Route path="/explore-sensors" element={<ExploreSensors />} />
+            </Routes>
+            <footer className="app-footer"></footer>
+          </Router>
         </WalletModalProvider>
       </WalletProvider>
     </ConnectionProvider>

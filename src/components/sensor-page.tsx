@@ -9,8 +9,8 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import "../styles/SensorPage.css";
-import { useState } from "react";
-import { program, tokenMintPDA, vaultPDA } from "../anchor/setup";
+import { useEffect, useState } from "react";
+import { program, Sensor, tokenMintPDA, vaultPDA } from "../anchor/setup";
 import { BN } from "@coral-xyz/anchor";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 
@@ -21,6 +21,8 @@ import {
 } from "@solana/spl-token";
 import { PublicKey } from "@solana/web3.js";
 import { SYSTEM_PROGRAM_ID } from "@coral-xyz/anchor/dist/cjs/native/system";
+import { bs58 } from "@coral-xyz/anchor/dist/cjs/utils/bytes";
+import axios from "axios";
 
 type MoistureSensor = {
   id: number;
@@ -121,11 +123,55 @@ const mockFlowmeterSensors: FlowmeterSensor[] = [
   },
 ];
 
+// 8 bytes discriminator, 8 bytes id
+const SENSOR_ACCOUNT_OFFSET = 8 + 8;
+
+enum SensorType {
+  Moisture = 0,
+  Flowmeter = 1,
+}
+
+type SensorData = {
+  time: Date;
+  value: number;
+};
+
+type SensorWithData = {
+  sensor: Sensor;
+  data: SensorData;
+};
+
 export default function SensorPage() {
   const { connected, connect, publicKey, sendTransaction, select } =
     useWallet();
 
   const { connection } = useConnection();
+
+  const [sensorData, setSensorData] = useState([
+    { time: "10:00", value: 30 },
+    { time: "11:00", value: 35 },
+    { time: "12:00", value: 32 },
+    { time: "13:00", value: 40 },
+  ]);
+
+  const [sensorFlowData, setFLowSensorData] = useState([
+    { name: "Page A", uv: 1000, pv: 2400, amt: 1400 },
+    { name: "Page B", uv: 1500, pv: 1398, amt: 1810 },
+    { name: "Page C", uv: 2000, pv: 9800, amt: 2290 },
+    { name: "Page D", uv: 1780, pv: 3908, amt: 1000 },
+  ]);
+
+  const [collateralizedMoistureSensors, setCollateralizedMoistureSensors] =
+    useState<Sensor[] | null>(null);
+  const [uncollateralizedMoistureSensors, setUncollateralizedMoistureSensors] =
+    useState<Sensor[] | null>(null);
+
+  const [collateralizedflowmeterSensors, setCollateralizedFlowmeterSensors] =
+    useState<Sensor[] | null>(null);
+  const [
+    uncollateralizedflowmeterSensors,
+    setUncollateralizedFlowmeterSensors,
+  ] = useState<Sensor[] | null>(null);
 
   const [searchQuery, setSearchQuery] = useState("");
   const [sensorType, setSensorType] = useState<"moisture" | "flowmeter">(
@@ -142,26 +188,73 @@ export default function SensorPage() {
     );
   };
 
-  const filteredMoistureSensors = mockMoistureSensors.filter((sensor) =>
-    matchesSearch(sensor.lat, sensor.lon, sensor.id)
-  );
-  const filteredFlowmeterSensors = mockFlowmeterSensors.filter((sensor) =>
-    matchesSearch(sensor.lat, sensor.lon, sensor.id)
-  );
+  useEffect(() => {
+    fetchData();
 
-  const collateralizedMoistureSensors = mockMoistureSensors.filter(
-    (sensor) => sensor.collateralized
-  );
-  const uncollateralizedMoistureSensors = mockMoistureSensors.filter(
-    (sensor) => !sensor.collateralized
-  );
+    if (sensorType == "moisture") {
+      fetchMoistures();
+    } else {
+      fetchFlowmeters();
+    }
+  }, [sensorType]);
 
-  const collateralizedFlowmeterSensors = mockFlowmeterSensors.filter(
-    (sensor) => sensor.collateralized
-  );
-  const uncollateralizedFlowmeterSensors = mockFlowmeterSensors.filter(
-    (sensor) => !sensor.collateralized
-  );
+  const fetchData = async () => {
+    const resp = await axios.get(`http://localhost:3000/web/direct/moisture/0`);
+    console.log(resp.data.values);
+    setSensorData(resp.data.values);
+  };
+
+  const fetchFlowmeters = async () => {
+    if (collateralizedflowmeterSensors && uncollateralizedflowmeterSensors) {
+      return;
+    }
+
+    const wrappedSensors = await program.account.sensor.all([
+      {
+        memcmp: {
+          offset: SENSOR_ACCOUNT_OFFSET,
+          bytes: bs58.encode(Buffer.from([SensorType.Flowmeter])),
+        },
+      },
+    ]);
+
+    const sensors = wrappedSensors.map(({ account }) => account);
+
+    const uncollateralized = sensors.filter(
+      (s) => "uncollateralized" in s.status
+    );
+
+    const collateralized = sensors.filter((s) => "collateralized" in s.status);
+
+    setUncollateralizedFlowmeterSensors(uncollateralized);
+    setCollateralizedFlowmeterSensors(collateralized);
+  };
+
+  const fetchMoistures = async () => {
+    if (collateralizedMoistureSensors && uncollateralizedMoistureSensors) {
+      return;
+    }
+
+    const wrappedSensors = await program.account.sensor.all([
+      {
+        memcmp: {
+          offset: SENSOR_ACCOUNT_OFFSET,
+          bytes: bs58.encode(Buffer.from([SensorType.Moisture])),
+        },
+      },
+    ]);
+
+    const sensors = wrappedSensors.map(({ account }) => account);
+
+    const uncollateralized = sensors.filter(
+      (s) => "uncollateralized" in s.status
+    );
+
+    const collateralized = sensors.filter((s) => "collateralized" in s.status);
+
+    setUncollateralizedMoistureSensors(uncollateralized);
+    setCollateralizedMoistureSensors(collateralized);
+  };
 
   const collateralize = async (sensorSeed: string, sensorId: number) => {
     if (!publicKey) {
@@ -369,23 +462,27 @@ export default function SensorPage() {
           <div className="sensor-section-container">
             <h2 className="sensor-section-title">Collateralized</h2>
             <div className="sensor-grid">
-              {collateralizedMoistureSensors.map((sensor) => {
-                const isOpen = openId === sensor.id;
+              {collateralizedMoistureSensors?.map((sensor) => {
+                const isOpen = openId === sensor.id.toString();
                 return (
                   <div
-                    key={sensor.id}
+                    key={sensor.id.toString()}
                     className="sensor-card"
                     style={{ position: "relative" }}
                   >
                     <div className="sensor-card-header">
-                      <h3 className="sensor-card-title">Sensor #{sensor.id}</h3>
+                      <h3 className="sensor-card-title">
+                        Sensor #{sensor.id.toString()}
+                      </h3>
 
                       <button
                         className="hamburger-btn"
                         onClick={(e) => {
                           e.stopPropagation();
                           setOpenId((current) =>
-                            current === sensor.id ? null : sensor.id
+                            current === sensor.id.toString()
+                              ? null
+                              : sensor.id.toString()
                           );
                         }}
                       >
@@ -397,7 +494,10 @@ export default function SensorPage() {
                           <button
                             className="dropdown-item"
                             onClick={() => {
-                              uncollateralize("MOISTURE_SENSOR", sensor.id);
+                              uncollateralize(
+                                "MOISTURE_SENSOR",
+                                sensor.id.toString()
+                              );
                               setOpenId(null);
                             }}
                           >
@@ -408,10 +508,11 @@ export default function SensorPage() {
                     </div>
 
                     <p className="sensor-card-location">
-                      Lat: {sensor.lat}, Lon: {sensor.lon}
+                      Lat: {sensor.latitude.toString()}, Lon:{" "}
+                      {sensor.longitude.toString()}
                     </p>
 
-                    <div className="sensor-chart">
+                    {/* <div className="sensor-chart">
                       <ResponsiveContainer width="100%" height="100%">
                         <AreaChart
                           data={sensor.moistureData}
@@ -428,7 +529,7 @@ export default function SensorPage() {
                           />
                         </AreaChart>
                       </ResponsiveContainer>
-                    </div>
+                    </div> */}
                   </div>
                 );
               })}
@@ -438,23 +539,27 @@ export default function SensorPage() {
           <div className="sensor-section-container">
             <h2 className="sensor-section-title">Uncollateralized</h2>
             <div className="sensor-grid">
-              {uncollateralizedMoistureSensors.map((sensor) => {
-                const isOpen = openId === sensor.id;
+              {uncollateralizedMoistureSensors?.map((sensor) => {
+                const isOpen = openId === sensor.id.toString();
                 return (
                   <div
-                    key={sensor.id}
+                    key={sensor.id.toString()}
                     className="sensor-card"
                     style={{ position: "relative" }}
                   >
                     <div className="sensor-card-header">
-                      <h3 className="sensor-card-title">Sensor #{sensor.id}</h3>
+                      <h3 className="sensor-card-title">
+                        Sensor #{sensor.id.toString()}
+                      </h3>
 
                       <button
                         className="hamburger-btn"
                         onClick={(e) => {
                           e.stopPropagation();
                           setOpenId((current) =>
-                            current === sensor.id ? null : sensor.id
+                            current === sensor.id.toString()
+                              ? null
+                              : sensor.id.toString()
                           );
                         }}
                       >
@@ -466,7 +571,10 @@ export default function SensorPage() {
                           <button
                             className="dropdown-item"
                             onClick={() => {
-                              collateralize("MOISTURE_SENSOR", sensor.id);
+                              collateralize(
+                                "MOISTURE_SENSOR",
+                                sensor.id.toString()
+                              );
                               setOpenId(null);
                             }}
                           >
@@ -477,13 +585,14 @@ export default function SensorPage() {
                     </div>
 
                     <p className="sensor-card-location">
-                      Lat: {sensor.lat}, Lon: {sensor.lon}
+                      Lat: {sensor.latitude.toString()}, Lon:{" "}
+                      {sensor.longitude.toString()}
                     </p>
 
                     <div className="sensor-chart">
                       <ResponsiveContainer width="100%" height="100%">
                         <AreaChart
-                          data={sensor.moistureData}
+                          data={sensorData}
                           margin={{ top: 5, right: 0, left: 0, bottom: 5 }}
                         >
                           <XAxis dataKey="time" />
@@ -516,23 +625,27 @@ export default function SensorPage() {
           <div className="sensor-section-container">
             <h2 className="sensor-section-title">Collateralized</h2>
             <div className="sensor-grid">
-              {collateralizedFlowmeterSensors.map((sensor) => {
-                const isOpen = openId === sensor.id;
+              {collateralizedflowmeterSensors?.map((sensor) => {
+                const isOpen = openId === sensor.id.toString();
                 return (
                   <div
-                    key={sensor.id}
+                    key={sensor.id.toString()}
                     className="sensor-card"
                     style={{ position: "relative" }}
                   >
                     <div className="sensor-card-header">
-                      <h3 className="sensor-card-title">Sensor #{sensor.id}</h3>
+                      <h3 className="sensor-card-title">
+                        Sensor #{sensor.id.toString()}
+                      </h3>
 
                       <button
                         className="hamburger-btn"
                         onClick={(e) => {
                           e.stopPropagation();
                           setOpenId((current) =>
-                            current === sensor.id ? null : sensor.id
+                            current === sensor.id.toString()
+                              ? null
+                              : sensor.id.toString()
                           );
                         }}
                       >
@@ -544,7 +657,10 @@ export default function SensorPage() {
                           <button
                             className="dropdown-item"
                             onClick={() => {
-                              uncollateralize("FLOWMETER_SENSOR", sensor.id);
+                              uncollateralize(
+                                "FLOWMETER_SENSOR",
+                                sensor.id.toString()
+                              );
                               setOpenId(null);
                             }}
                           >
@@ -555,11 +671,12 @@ export default function SensorPage() {
                     </div>
 
                     <p className="sensor-card-location">
-                      Lat: {sensor.lat}, Lon: {sensor.lon}
+                      Lat: {sensor.latitude.toString()}, Lon:{" "}
+                      {sensor.longitude.toString()}
                     </p>
                     <div className="sensor-chart">
                       <ResponsiveContainer width="100%" height="100%">
-                        <BarChart data={sensor.flowData}>
+                        <BarChart data={sensorFlowData}>
                           <Tooltip
                             contentStyle={{
                               border: "1px solid #fff",
@@ -582,23 +699,27 @@ export default function SensorPage() {
           <div className="sensor-section-container">
             <h2 className="sensor-section-title">Uncollateralized</h2>
             <div className="sensor-grid">
-              {uncollateralizedFlowmeterSensors.map((sensor) => {
-                const isOpen = openId === sensor.id;
+              {uncollateralizedflowmeterSensors?.map((sensor) => {
+                const isOpen = openId === sensor.id.toString();
                 return (
                   <div
-                    key={sensor.id}
+                    key={sensor.id.toString()}
                     className="sensor-card"
                     style={{ position: "relative" }}
                   >
                     <div className="sensor-card-header">
-                      <h3 className="sensor-card-title">Sensor #{sensor.id}</h3>
+                      <h3 className="sensor-card-title">
+                        Sensor #{sensor.id.toString()}
+                      </h3>
 
                       <button
                         className="hamburger-btn"
                         onClick={(e) => {
                           e.stopPropagation();
                           setOpenId((current) =>
-                            current === sensor.id ? null : sensor.id
+                            current === sensor.id.toString()
+                              ? null
+                              : sensor.id.toString()
                           );
                         }}
                       >
@@ -610,7 +731,10 @@ export default function SensorPage() {
                           <button
                             className="dropdown-item"
                             onClick={() => {
-                              collateralize("FLOWMETER_SENSOR", sensor.id);
+                              collateralize(
+                                "FLOWMETER_SENSOR",
+                                sensor.id.toString()
+                              );
                               setOpenId(null);
                             }}
                           >
@@ -621,11 +745,12 @@ export default function SensorPage() {
                     </div>
 
                     <p className="sensor-card-location">
-                      Lat: {sensor.lat}, Lon: {sensor.lon}
+                      Lat: {sensor.latitude.toString()}, Lon:{" "}
+                      {sensor.longitude.toString()}
                     </p>
                     <div className="sensor-chart">
                       <ResponsiveContainer width="100%" height="100%">
-                        <BarChart data={sensor.flowData}>
+                        <BarChart data={sensorFlowData}>
                           <Tooltip
                             contentStyle={{
                               border: "1px solid #fff",

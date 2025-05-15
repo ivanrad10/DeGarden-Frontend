@@ -96,13 +96,13 @@ export default function HomePage() {
     <div className="home-page">
       <div className="text-section">
         <h1>
-          Build and tokenize
+          Smarter soils
           <br />
-          AI agents on Solana
+          Better crops
           <br />
-          in under 1 minute
+          Guaranteed Results
         </h1>
-        <p>Seamlessly AI agent integration for your collection</p>
+        <p>Unlocking Growth with Precision Agriculture</p>
         <div className="main-page-buttons">
           <button className="primary-button" onClick={exploreSensors}>
             Explore sensors
@@ -125,7 +125,16 @@ export default function HomePage() {
         </div>
       </div>
       <div className="image-section">
-        <img src={"../public/picture.svg"} alt="AI Agents in soil" />
+        <img
+          src={"../public/senzor1.svg"}
+          style={{
+            display: "block", // remove inline “baseline” whitespace/margin
+            width: "800px",
+            height: "525px",
+            objectFit: "contain", // or 'cover' if you want it to fill & crop
+          }}
+          alt="AI Agents in soil"
+        />
       </div>
     </div>
   );

@@ -1,0 +1,5 @@
+-fetch real sensors from blockchain, send the ids to the backend and get the latest data
+
+-fix the hover over the charts
+
+-user pays for data, blockchain emmits an event, fronted catches it and sends a request to backend for the data
